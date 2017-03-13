@@ -10,7 +10,7 @@ read -r sftp_password
 echo Where would you like to store this data and output? Hit Enter to Default to: /User/acme/Documents/auditlogs/firmname/
 read -r download_location
 
-if [ -z "$download_location" ]; then
+if [[ -z "$download_location" ]]; then
   #creating directory IF does not exist
   mkdir -p ~/Documents/auditlogs/"$practice"
   #changing directory to download location
