@@ -6,7 +6,7 @@
 echo What is the practice URL Prefix?
 read -r practice
 echo What is the SFTP password?
-read -r sftp_password
+read -rs sftp_password
 echo Where would you like to store this data and output? Hit Enter to Default to: /User/acme/Documents/auditlogs/firmname/
 read -r download_location
 
