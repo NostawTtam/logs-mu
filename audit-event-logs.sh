@@ -1,10 +1,31 @@
 #Pulls Meaningful Use oriented events from Audit Logs
 #!/bin/bash
 #Directions: Place this file into the directory of the Audit Logs that you would like the results for. Make sure to rename the full log to: pratice.currentdate_full.csv. Using Terminal on OSX use the cd function to cd to the directory. Ex. /Users/yourusername/Downloads/filenameofstoredlogs/ Once you are in the directory use the bash function to execute this script. Ex. bash ./AuditLogFriend
+#echo NOTE: The filename is required to be formatted as: practice.currentdate_full.csv . The script will also need to be run from the directory where the Audit Log is stored.
 
-echo NOTE: The filename is required to be formatted as: practice.currentdate_full.csv . The script will also need to be run from the directory where the Audit Log is stored.
 echo What is the practice URL Prefix?
 read -r practice
+echo What is the SFTP password?
+read -r sftp_password
+echo Where would you like to store this data and output? Hit Enter to Default to: /User/acme/Documents/auditlogs/firmname/
+read -r download_location
+
+if [ -z "$download_location" ]; then
+  #creating directory IF does not exist
+  mkdir -p ~/Documents/auditlogs/"$practice"
+  #changing directory to download location
+  cd ~/Documents/auditlogs/"$practice"
+fi
+
+#creating directory IF does not exist
+mkdir -p "$download_location"
+#changing directory to download location
+cd "$download_location"
+#downloading files from sftp to directory requested
+sftp "$practice"@sftp.m-2.md:/incoming/*entire.zip "$download_location"
+#Unzip files
+unzip ./*entire.zip
+
 echo Please choose one of the options:
 OPTIONS="AllowPatientsToIntramail MUSETTING drugDrug rxFormularyCheck All Exit"
 
