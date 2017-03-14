@@ -89,10 +89,10 @@ elif [ "$opt" = "rxFormularyCheck" ]; then
     RFC
 elif [ "$opt" = "All" ]; then
 	APTI
-  MSET
-  DD
-  RFC
-	echo Done.
+  	MSET
+  	DD
+  	RFC
+echo Done.
 
 elif [ "$opt" = "Exit" ]; then
         exit
