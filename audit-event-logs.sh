@@ -3,13 +3,14 @@
 #Directions: Place this file into the directory of the Audit Logs that you would like the results for. Make sure to rename the full log to: pratice.currentdate_full.csv. Using Terminal on OSX use the cd function to cd to the directory. Ex. /Users/yourusername/Downloads/filenameofstoredlogs/ Once you are in the directory use the bash function to execute this script. Ex. bash ./AuditLogFriend
 echo NOTE: The filename is required to be formatted as: practice.currentdate_full.csv . The script will also need to be run from the directory where the Audit Log is stored.
 echo What is the practice URL Prefix?
-read -r practice
+  read -r practice
 echo Please choose one of the options:
-OPTIONS="AllowPatientsToIntramail MUSETTING drugDrug rxFormularyCheck All Exit"
-
+  OPTIONS="AllowPatientsToIntramail MUSETTING drugDrug rxFormularyCheck All Exit"
 function APTI() {
   echo Running script gathering entries with AllowPatientsToIntramail.
-    cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/allowPatientsToIntramail/' > ./"$practice".allowPatientsToIntramail.csv
+    cat ./*full.csv   \
+        | pv -p ./*full.csv   \
+        | parallel --block 100M --no-notice --pipe awk '/allowPatientsToIntramail/' > ./"$practice".allowPatientsToIntramail.csv    \
   echo  Number of total entries in "$practice".allowPatientsToIntramail.csv
     wc -l "$practice".allowPatientsToIntramail.csv
   echo allowPatientsToIntramail False entries:
@@ -21,10 +22,11 @@ function APTI() {
     grep --color -E '"allowPatientsToIntramail' "$practice".allowPatientsToIntramail.csv
   echo Done.
 }
-
 function MSET() {
   echo Running script gathering entries with MU_SETTING.
-    cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/MU_SETTING/' > ./"$practice".MU_SETTING.csv
+    cat ./*full.csv   \
+        | pv -p ./*full.csv   \
+        | parallel --block 100M --no-notice --pipe awk '/MU_SETTING/' > ./"$practice".MU_SETTING.csv    \
   echo  Number of total entries in "$practice".MU_SETTING.csv
     wc -l "$practice".MU_SETTING.csv
   echo MU_SETTING_ENABLED entries:
@@ -35,10 +37,11 @@ function MSET() {
     grep --color -E 'MU_SETTING' "$practice".MU_SETTING.csv
   echo Done.
 }
-
 function DD() {
   echo Running script gathering entries with drugDrug.
-    cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/drugDrug/' > ./"$practice".drugDrug.csv
+    cat ./*full.csv   \
+        | pv -p ./*full.csv   \
+        | parallel --block 100M --no-notice --pipe awk '/drugDrug/' > ./"$practice".drugDrug.csv    \
   echo  Number of total entries in "$practice".drugDrug.csv
     wc -l "$practice".drugDrug.csv
   echo drugDrug OFF entries:
@@ -56,10 +59,11 @@ function DD() {
     grep --color -E '"drugDrugWarningLevel' "$practice".drugDrug.csv
   echo Done.
 }
-
 function RFC() {
   echo Running script gathering entries with rxFormularyCheck.
-    cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/rxFormularyCheck/' > ./"$practice".rxFormularyCheck.csv
+    cat ./*full.csv   \
+        | pv -p ./*full.csv   \
+        | parallel --block 100M --no-notice --pipe awk '/rxFormularyCheck/' > ./"$practice".rxFormularyCheck.csv    \
   echo  Number of total entries in "$practice".rxFormularyCheck.csv
     wc -l "$practice".rxFormularyCheck.csv
   echo rxFormularyCheckEnabled active entries:
@@ -73,7 +77,6 @@ function RFC() {
     grep --color -E '"rxFormularyCheckDisabled' "$practice".rxFormularyCheck.csv
   echo Done.
 }
-
 select opt in $OPTIONS; do
 if [ "$opt" = "AllowPatientsToIntramail" ]; then
   #Call function AllowPatientsToIntramail(APTI)
@@ -93,7 +96,6 @@ elif [ "$opt" = "All" ]; then
   	DD
   	RFC
 echo Done.
-
 elif [ "$opt" = "Exit" ]; then
         exit
        clear
