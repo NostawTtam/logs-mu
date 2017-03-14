@@ -59,18 +59,18 @@ function DD() {
 
 function RFC() {
   echo Running script gathering entries with rxFormularyCheck.
-cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/rxFormularyCheck/' > ./"$practice".rxFormularyCheck.csv
+    cat ./*full.csv | pv -p ./*full.csv | parallel --block 100M --no-notice --pipe awk '/rxFormularyCheck/' > ./"$practice".rxFormularyCheck.csv
   echo  Number of total entries in "$practice".rxFormularyCheck.csv
-wc -l "$practice".rxFormularyCheck.csv
+    wc -l "$practice".rxFormularyCheck.csv
   echo rxFormularyCheckEnabled active entries:
-grep -c 'rxFormularyCheckEnabled=>true;' "$practice".rxFormularyCheck.csv
+    grep -c 'rxFormularyCheckEnabled=>true;' "$practice".rxFormularyCheck.csv
   echo rxFormularyCheckEnabled not active entries:
-grep -c 'rxFormularyCheckEnabled=>false;' "$practice".rxFormularyCheck.csv
+    grep -c 'rxFormularyCheckEnabled=>false;' "$practice".rxFormularyCheck.csv
   echo Entries found for rxFormularyCheck that may need additional review:
-grep --color -E '""rxFormularyCheckEnabled""' "$practice".rxFormularyCheck.csv
-grep --color -E '"rxFormularyCheckEnabled' "$practice".rxFormularyCheck.csv
-grep --color -E '""rxFormularyCheckDisabled""' "$practice".rxFormularyCheck.csv
-grep --color -E '"rxFormularyCheckDisabled' "$practice".rxFormularyCheck.csv
+    grep --color -E '""rxFormularyCheckEnabled""' "$practice".rxFormularyCheck.csv
+    grep --color -E '"rxFormularyCheckEnabled' "$practice".rxFormularyCheck.csv
+    grep --color -E '""rxFormularyCheckDisabled""' "$practice".rxFormularyCheck.csv
+    grep --color -E '"rxFormularyCheckDisabled' "$practice".rxFormularyCheck.csv
   echo Done.
 }
 
@@ -88,7 +88,7 @@ elif [ "$opt" = "rxFormularyCheck" ]; then
   #Call function rxFormularyCheck(RFC)
     RFC
 elif [ "$opt" = "All" ]; then
-	APTI
+	  APTI
   	MSET
   	DD
   	RFC
