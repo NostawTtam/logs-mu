@@ -4,6 +4,30 @@
 echo NOTE: The filename is required to be formatted as: practice.currentdate_full.csv . The script will also need to be run from the directory where the Audit Log is stored.
 echo What is the practice URL Prefix?
   read -r practice
+echo Choose directory to save audit log zip files \(Default: ~/Desktop/"$practice"\):
+read -r directory
+#Checks to see if user wants file to go to default directory or to custom directory they entered
+if [[ -z "$directory" ]]; then
+        directory=~/Desktop/"$practice"
+        #Checks to see if directory exists, if not then makes directory
+        if [[ ! -d "$directory" ]]; then
+                mkdir "$directory"
+        fi
+else
+        directory="$directory"
+        #Checks to see if directory exists, if not then makes directory
+        if [[ ! -d "$directory" ]]; then
+                mkdir "$directory"
+        fi
+fi
+#Downloads all files ending in entire.zip and moves them to the directory specified
+sftp "$practice"@sftp.m-2.md:/incoming/*entire.zip "$directory"
+#Displays if file was found in directory or not - Experimental
+if [ $? -eq 1 ]; then
+        echo File not found in sftp!
+else
+        echo Audit log files sent successfully to $directory
+fi
 echo Please choose one of the options:
   OPTIONS="AllowPatientsToIntramail MUSETTING drugDrug rxFormularyCheck All Exit"
 function APTI() {
